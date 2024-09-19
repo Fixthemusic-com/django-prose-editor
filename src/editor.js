@@ -23,6 +23,10 @@ import {
   markMenuItems,
   htmlMenuItem,
 } from "./menu.js"
+import {
+  customComponentSpec,
+  createCustomComponentPlugin
+} from './custom-component'
 import { noSpellCheck } from "./nospellcheck.js"
 import { typographicPlugin } from "./typographic.js"
 import { crel, createDebouncedBackWriter, parseHTML } from "./utils.js"
@@ -57,6 +61,7 @@ export function createEditor(textarea, config) {
       horizontal_rule: nodes.horizontal_rule,
       text: nodes.text,
       hard_break: nodes.hard_break,
+      customComponent: customComponentSpec,
     },
     marks: {
       link: marks.link,
@@ -117,6 +122,9 @@ export function createEditor(textarea, config) {
         config.html ? htmlMenuItem() : null,
       ].filter(Boolean),
     ),
+    createCustomComponentPlugin([
+      {label: 'test', rendered: 'test'}
+    ]),
     noSpellCheck(),
     config.typographic ? typographicPlugin : null,
   ].filter(Boolean)
