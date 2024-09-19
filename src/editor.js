@@ -12,6 +12,7 @@ import { nodes, marks } from "prosemirror-schema-basic"
 import { addListNodes } from "prosemirror-schema-list"
 import { EditorState } from "prosemirror-state"
 import { EditorView } from "prosemirror-view"
+import { tableNodes, tableEditing } from "prosemirror-tables"
 
 import { buildKeymap, applyMarksKeymap } from "./keymap.js"
 import {
@@ -62,6 +63,19 @@ export function createEditor(textarea, config) {
       text: nodes.text,
       hard_break: nodes.hard_break,
       customComponent: customComponentSpec,
+      ...tableNodes({
+        tableGroup: "block",
+        cellContent: "block+",
+        cellAttributes: {
+          background: {
+            default: null,
+            getFromDOM(dom) { return dom.style.backgroundColor || null },
+            setDOMAttr(value, attrs) {
+              if (value) attrs.style = (attrs.style || "") + `background-color: ${value};`
+            }
+          }
+        }
+      })
     },
     marks: {
       link: marks.link,
