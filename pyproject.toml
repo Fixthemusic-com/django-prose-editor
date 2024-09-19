@@ -115,7 +115,7 @@ version = "0.1.0"
 description = ""
 authors = ["Freeman <freemanon@gmail.com>"]
 packages = [
-  { include = "**/*" },
+  { include = "django_prose_editor" },
 ]
 
 [build-system]
